@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from datetime import datetime
+from services.models import Service
 
 def index(request):
     # Define your static content
@@ -14,7 +14,7 @@ def index(request):
     </div>
     """
 
-    # Pass the static content to the template context
-    context = {'static_content': static_content}
+    featured_services = Service.objects.filter(is_featured=True)
+    context = {'static_content': static_content, 'featured_services': featured_services}
 
     return render(request, 'core/index.html', context)
